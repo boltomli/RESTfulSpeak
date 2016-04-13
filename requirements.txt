@@ -1,8 +1,10 @@
 aniso8601==1.1.0
+Cython==0.24
 Flask==0.10.1
-Flask-RESTful==0.3.5
+flask-restplus==0.9.0
 itsdangerous==0.24
 Jinja2==2.8
+jsonschema==2.5.1
 MarkupSafe==0.23
 python-dateutil==2.5.2
 pytz==2016.3
