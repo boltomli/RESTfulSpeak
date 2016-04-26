@@ -67,7 +67,10 @@ def build_cmd(backend_name, text):
     phoneme_arg = [p['arg'] for p in default_parameters if p['name'] == 'phoneme'][0]
     quiet_arg = [p['arg'] for p in default_parameters if p['name'] == 'quiet'][0]
 
-    text_cmd = [text_arg, text.strip()]
+    if text_arg.strip() == '': # Such as espeak
+        text_cmd = [text.strip()]
+    else:
+        text_cmd = [text_arg, text.strip()]
 
     return [
         # Fill optional parameters
