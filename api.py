@@ -2,6 +2,7 @@
 from flask import Flask
 from flask_restplus import Api, Resource, fields
 from subprocess import check_output
+import shutil
 
 app = Flask(__name__)
 api = Api(app, version='0.1', title='Speak API',
@@ -9,10 +10,9 @@ api = Api(app, version='0.1', title='Speak API',
 
 ns = api.namespace('speaks', descripton='Speak operations')
 
-# TODO: Backends should be initialized pragmatically.
 Backends = {
     'espeak': {
-        'binary': '/usr/bin/espeak',
+        'binary': '',
         'info': 'http://espeak.sourceforge.net/',
         'parameters': [
             {'name': 'text', 'arg': ' ', 'type': 0, 'required': True},
@@ -21,7 +21,7 @@ Backends = {
         ],
     },
     'flite': {
-        'binary': '/usr/bin/flite',
+        'binary': '',
         'info': 'http://www.festvox.org/flite/',
         'parameters': [
             {'name': 'text', 'arg': '-t', 'required': True},
@@ -30,6 +30,13 @@ Backends = {
         ],
     },
 }
+
+for be in Backends:
+    binary = shutil.which(be)
+    if binary:
+        Backends[be]['binary'] = binary
+    else:
+        Backends.pop(be)
 
 parameter = api.model('Parameter', {
     'name': fields.String(required=True, description='The option name'),
