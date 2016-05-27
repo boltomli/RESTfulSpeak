@@ -71,8 +71,7 @@ parameter = api.model('Parameter', {
 backend = api.model('Backend', {
     'binary': fields.String(required=True, description='The backend binary'),
     'info': fields.String(required=True, description='The info site'),
-    'availability': fields.List(fields.String(required=True, 
-description='Availability on OS')),
+    'availability': fields.List(fields.String(required=True, description='Availability on OS')),
     'parameters': fields.List(fields.Nested(parameter, required=True,
                                             description='The parameter list')),
 })
