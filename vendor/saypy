@@ -1,0 +1,26 @@
+#!/System/Library/Frameworks/Python.framework/Versions/2.7/bin/python2.7
+
+# -*- coding: utf-8 -*-
+
+from __future__ import unicode_literals
+import argparse
+from AppKit import NSSpeechSynthesizer
+
+parser = argparse.ArgumentParser(description='Text To Speech on OS X.')
+parser.add_argument('text', metavar='Text', type=str,
+                    help='Input text to speak.')
+
+args = parser.parse_args()
+
+# Only en-US supports phoneme on Mac so far
+voice = 'com.apple.speech.synthesis.voice.alex'
+availableVoices = NSSpeechSynthesizer.availableVoices()
+speechSynthesizer = None
+for x in availableVoices:
+    if voice.lower() == x.lower():
+        speechSynthesizer = NSSpeechSynthesizer.alloc().initWithVoice_(x)
+
+if speechSynthesizer is None:
+    raise Exception('Voice alex is not found in available voices:\n' + '\n'.join(availableVoices))
+
+print(speechSynthesizer.phonemesFromText_(args.text))

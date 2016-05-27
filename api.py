@@ -1,8 +1,12 @@
-# This Python file uses the following encoding: utf-8
+#! /usr/bin/env python
+
+# -*- coding: utf-8 -*-
+
 from flask import Flask
 from flask_restplus import Api, Resource, fields
 from subprocess import check_output
 import shutil
+import os
 
 app = Flask(__name__)
 api = Api(app, version='0.1', title='Speak API',
@@ -29,10 +33,24 @@ Backends = {
             {'name': 'quiet', 'arg': '-o /dev/null'},
         ],
     },
+    'saypy': {
+        'binary': '',
+        'info': 'https://github.com/boltomli/RESTfulSpeak',
+        'parameters': [
+            {'name': 'text', 'arg': ' ', 'required': True},
+            {'name': 'phoneme', 'arg': ' '},
+            {'name': 'quiet', 'arg': ' '},
+        ],
+    },
 }
 
 for be in Backends:
-    binary = shutil.which(be)
+    vendor_bin = os.path.join('vendor', be)
+    if os.path.exists(vendor_bin):
+        binary = vendor_bin
+    else:
+        binary = shutil.which(be)
+
     if binary:
         Backends[be]['binary'] = binary
     else:
@@ -79,13 +97,17 @@ def build_cmd(backend_name, text):
     else:
         text_cmd = [text_arg, text.strip()]
 
-    return [
-        # Fill optional parameters
-        Backends[backend_name]['binary'],
-        phoneme_arg,
-        quiet_arg,
-    ] + text_cmd
-    # Text must appear at the end (to make espeak happy)
+    if phoneme_arg.strip() == '' and quiet_arg.strip() == '':   # Such as enclosed saypy vendor sample on Mac
+        return [
+            Backends[backend_name]['binary'],
+        ] + text_cmd
+    else:
+        return [
+            Backends[backend_name]['binary'],
+            phoneme_arg,
+            quiet_arg,
+        ] + text_cmd
+        # Text must appear at the end (to make espeak happy)
 
 
 parser = api.parser()
