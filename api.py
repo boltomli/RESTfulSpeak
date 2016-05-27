@@ -96,18 +96,18 @@ parser.add_argument('text', type=str, help='Text to speak', required=True, locat
 @api.doc(responses={404: 'Backend not found'},
          params={'backend_name': 'The backend name'})
 class Backend(Resource):
-    '''Show a single backend and speak with it'''
+    """Show a single backend and speak with it"""
     @api.doc(description='Name should be one of {0}'.format(', '.join(Backends.keys())))
     @api.marshal_with(backend)
     def get(self, backend_name):
-        '''Show a backend'''
+        """Show a backend"""
         abort_if_backend_isnt_available(backend_name)
         return Backends[backend_name]
 
     @api.doc(parser=parser)
     @api.marshal_with(result, code=201)
     def post(self, backend_name):
-        '''Speak with a backend'''
+        """Speak with a backend"""
         abort_if_backend_isnt_available(backend_name)
         args = parser.parse_args()
         cmd = build_cmd(backend_name, args['text'])
@@ -117,10 +117,10 @@ class Backend(Resource):
 
 @ns.route('/')
 class BackendList(Resource):
-    '''Show a list of all available backends'''
+    """Show a list of all available backends"""
     @api.marshal_list_with(backend_list)
     def get(self):
-        '''List all backends'''
+        """List all backends"""
         return [{'name': name, 'backend': backend} for name, backend in Backends.items()]
 
 
