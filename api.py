@@ -38,8 +38,18 @@ Backends = {
     },
     'saypy': {
         'binary': '',
-        'info': 'https://github.com/boltomli/RESTfulSpeak',
+        'info': 'https://github.com/boltomli/RESTfulSpeak/blob/master/vendor/saypy',
         'availability': ['darwin'],
+        'parameters': [
+            {'name': 'text', 'arg': ' ', 'required': True},
+            {'name': 'phoneme', 'arg': ' '},
+            {'name': 'quiet', 'arg': ' '},
+        ],
+    },
+    'CSSpeak.exe': {
+        'binary': '',
+        'info': 'https://github.com/boltomli/RESTfulSpeak/blob/master/vendor/CSSpeak/',
+        'availability': ['win32'],
         'parameters': [
             {'name': 'text', 'arg': ' ', 'required': True},
             {'name': 'phoneme', 'arg': ' '},
