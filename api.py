@@ -49,7 +49,7 @@ Backends = {
     'CSSpeak.exe': {
         'binary': '',
         'info': 'https://github.com/boltomli/RESTfulSpeak/blob/master/vendor/CSSpeak/',
-        'availability': ['win32'],
+        'availability': ['win32', 'cygwin'],
         'parameters': [
             {'name': 'text', 'arg': ' ', 'required': True},
             {'name': 'phoneme', 'arg': ' '},
