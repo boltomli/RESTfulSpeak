@@ -14,7 +14,7 @@ pip install -r requirements.txt
 |espeak|['darwin', 'linux', 'win32', 'cygwin']|[Offical home page](http://espeak.sourceforge.net/)|
 |flite|['darwin', 'linux', 'cygwin']|[Offical home page](http://www.festvox.org/flite/)|
 |saypy|['darwin']|Python wrapper script on OS X calling [NSSpeechSynthesizer.phonemesFromText](https://developer.apple.com/library/mac/documentation/Cocoa/Reference/ApplicationKit/Classes/NSSpeechSynthesizer_Class/index.html#//apple_ref/occ/instm/NSSpeechSynthesizer/phonemesFromText:)|
-|CSSpeak.exe|['win32']|Sample C# code getting [System.Speech.Synthesis.PhonemeReachedEventArgs](https://msdn.microsoft.com/en-us/library/system.speech.synthesis.phonemereachedeventargs%28v=vs.110%29.aspx)|
+|CSSpeak.exe|['win32', 'cygwin']|Sample C# code getting [System.Speech.Synthesis.PhonemeReachedEventArgs](https://msdn.microsoft.com/en-us/library/system.speech.synthesis.phonemereachedeventargs%28v=vs.110%29.aspx)|
 
 ## Run
 ```
@@ -41,7 +41,7 @@ $ curl -X POST --header 'Content-Type: application/x-www-form-urlencoded' --head
 {"cmd": "['vendor/saypy', 'say something']", "value": "_s1EY _s1UXmTIHN.\n"}
 ```
 
-Windows only:
+Windows only (also works in cygwin):
 ```
 curl -X POST --header 'Content-Type: application/x-www-form-urlencoded' --header 'Accept: application/json' -d 'text=say%20something' 'http://localhost:5000/speaks/CSSpeak.exe'
 {"value": "_ s ey s ah m th ih ng _ ", "cmd": "['vendor\\\\CSSpeak.exe', 'say something']"}
