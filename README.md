@@ -21,10 +21,12 @@ pip install -r requirements.txt
 ## Run
 
 ```shell
-python api.py
+pip install waitress
+waitress-serve --port=5000 api:app
 ```
 
 ## Test
+
 Open http://localhost:5000/ to view the API document and try it out. Or through CLI:
 
 ```shell
